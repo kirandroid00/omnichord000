@@ -3,101 +3,97 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Omnichord - Minimal Ocean</title>
+<title>omnichord</title>
 <style>
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { 
   height: 100%; 
-  background: #020714; 
+  background: #000B58; 
   color: #D4F2F9; 
   font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
   overflow: hidden; 
   user-select: none;
   -webkit-user-select: none;
 }
-body { display: flex; flex-direction: column; height: 100vh; padding: 16px; gap: 16px; }
+body { display: flex; flex-direction: column; height: 100vh; padding: 12px; gap: 12px; }
 
-/* Clean Top Header Bar */
+/* Ultra-Clean Header Controls Only */
 .header { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
-.logo { font-weight: 700; font-size: 18px; letter-spacing: -0.03em; color: #8EDFF6; text-transform: lowercase; }
+.controls { display: flex; align-items: center; gap: 8px; width: 100%; justify-content: flex-start; }
 
-/* Simplified Pure Metronome Control */
-.controls { display: flex; align-items: center; gap: 12px; }
-.rhythm-toggle {
-  background: #002244; border: 1px solid #003366; color: #8EDFF6;
-  font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer; transition: all .15s ease;
+.btn-ctrl {
+  background: #001E75; border: 1px solid #003394; color: #8EDFF6;
+  font-size: 12px; font-weight: 700; padding: 8px 16px; border-radius: 4px; cursor: pointer; transition: all .1s ease;
+  text-transform: uppercase; letter-spacing: 0.05em;
 }
-.rhythm-toggle:hover { background: #003366; color: #D4F2F9; }
-.rhythm-toggle.on { background: #00B9E8; border-color: #00B9E8; color: #020714; }
+.btn-ctrl:hover { background: #003394; }
+.btn-ctrl.on { background: #00B9E8; border-color: #00B9E8; color: #000B58; }
 
 .tempo-display {
-  font-size: 14px; font-weight: 700; color: #D4F2F9; background: #000B58;
-  border: 1px solid #002244; padding: 5px 10px; min-width: 42px; text-align: center; border-radius: 6px;
+  font-size: 13px; font-weight: 700; color: #D4F2F9; background: #000B58;
+  border: 1px solid #001E75; padding: 7px 12px; min-width: 45px; text-align: center; border-radius: 4px;
 }
 .nudge {
-  width: 28px; height: 28px; background: #002244; border: 1px solid #003366; color: #8EDFF6;
-  font-size: 16px; font-weight: 600; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+  width: 32px; height: 32px; background: #001E75; border: 1px solid #003394; color: #8EDFF6;
+  font-size: 16px; font-weight: 600; border-radius: 4px; cursor: pointer; display: flex; align-items: center; justify-content: center;
 }
-.nudge:hover { background: #003366; }
-#tempo-slider { width: 90px; accent-color: #00B9E8; cursor: pointer; height: 4px; }
+.nudge:hover { background: #003394; }
+#tempo-slider { width: 110px; accent-color: #00B9E8; cursor: pointer; height: 4px; margin-left: 4px; }
 
-/* Visual Flash dot for Metronome Beats */
-.beat-dots { display: flex; gap: 6px; align-items: center; }
-.beat-dot { width: 8px; height: 8px; border-radius: 50%; background: #001533; transition: background 0.05s; }
+.beat-dot { width: 8px; height: 8px; border-radius: 50%; background: #001E75; transition: background 0.04s; margin: 0 4px; }
 .beat-dot.on { background: #00B9E8; box-shadow: 0 0 10px #00B9E8; }
 
-/* Main Screen Workspace split in two */
-.main-layout { display: flex; flex: 1; gap: 16px; overflow: hidden; }
+/* Main Split View Split */
+.main-layout { display: flex; flex: 1; gap: 12px; overflow: hidden; }
 
-/* Chord Section (Left side) */
-.chord-workspace { display: flex; flex: 1; gap: 8px; overflow: hidden; }
-.labels-sidebar { display: flex; flex-direction: column; gap: 4px; justify-content: stretch; width: 44px; }
+/* Left Side Workspace Matrix */
+.chord-workspace { display: flex; flex: 1; gap: 6px; overflow: hidden; }
+.labels-sidebar { display: flex; flex-direction: column; gap: 4px; justify-content: stretch; width: 38px; }
 .row-label {
   flex: 1; display: flex; align-items: center; justify-content: flex-end;
-  font-size: 11px; font-weight: 700; color: #0066C4; text-transform: uppercase; letter-spacing: 0.05em; padding-right: 4px;
+  font-size: 10px; font-weight: 700; color: #0066C4; text-transform: uppercase; padding-right: 2px;
 }
 .grid-wrap { flex: 1; display: flex; flex-direction: column; gap: 4px; }
 .chord-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; flex: 1; }
 
 .chord-key {
-  border: none; border-radius: 4px;
-  font-family: inherit; font-size: 11px; font-weight: 600;
-  color: rgba(255, 255, 255, 0.85); cursor: pointer;
+  border: none; border-radius: 3px;
+  font-family: inherit; font-size: 11px; font-weight: 700;
+  color: rgba(255, 255, 255, 0.9); cursor: pointer;
   display: flex; align-items: center; justify-content: center;
-  transition: transform .05s, filter .1s;
+  transition: transform .05s, filter .05s;
   -webkit-tap-highlight-color: transparent;
 }
 .chord-key:hover { filter: brightness(1.2); }
 .chord-key:active { transform: scale(.96); }
-.chord-key.selected { color: #020714; font-weight: 700; filter: brightness(1.35); box-shadow: inset 0 0 0 2px #D4F2F9; }
+.chord-key.selected { color: #000B58; font-weight: 800; filter: brightness(1.35); box-shadow: inset 0 0 0 2px #D4F2F9; }
 
-/* Giant Vertical Strum Plate (Right side Optimized) */
-.strum-section { width: 140px; position: relative; display: flex; flex-shrink: 0; }
+/* Right Hand Maximized Vertical Plate */
+.strum-section { width: 150px; position: relative; display: flex; flex-shrink: 0; }
 #strum-plate {
-  width: 100%; height: 100%; border-radius: 8px;
-  background: #000B58; border: 2px solid #002244;
+  width: 100%; height: 100%; border-radius: 6px;
+  background: #001E75; border: 1px solid #003394;
   position: relative; overflow: hidden; cursor: crosshair; touch-action: none;
   display: flex; flex-direction: column; align-items: stretch;
 }
-.string-strip { flex: 1; border-bottom: 1px solid rgba(255, 255, 255, 0.02); transition: background .15s; }
-.string-strip:last-child { border-bottom: none; }
+.string-strip { flex: 1; border-bottom: 1px solid rgba(255, 255, 255, 0.015); transition: background .12s; }
 
-/* Chord Display Text centered on the vertical plate */
 #chord-name {
   position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-90deg);
-  font-size: 42px; font-weight: 800; color: rgba(142, 223, 246, 0.15); pointer-events: none; text-transform: uppercase;
-  white-space: nowrap; letter-spacing: -0.02em;
+  font-size: 48px; font-weight: 900; color: rgba(212, 242, 249, 0.12); pointer-events: none; text-transform: uppercase;
+  white-space: nowrap; letter-spacing: -0.03em;
 }
 </style>
 </head>
 <body>
 
 <div class="header">
-  <div class="logo">omnichord</div>
   <div class="controls">
-    <button class="rhythm-toggle" id="metro-toggle">Metronome</button>
-    <div class="beat-dots" id="beat-dots"><div class="beat-dot"></div></div>
-    <button class="nudge" id="tempo-dn">−</button>
+    <button class="btn-ctrl" id="metro-toggle">Metro</button>
+    <div class="beat-dot"></div>
+    <button class="btn-ctrl on" id="sustain-btn">Sustain</button>
+    
+    <div style="width: 16px;"></div> <button class="nudge" id="tempo-dn">−</button>
     <div class="tempo-display" id="tempo-display">90</div>
     <button class="nudge" id="tempo-up">+</button>
     <input type="range" id="tempo-slider" min="40" max="200" value="90" step="1">
@@ -118,7 +114,6 @@ body { display: flex; flex-direction: column; height: 100vh; padding: 16px; gap:
 </div>
 
 <script>
-// Ocean-inspired colors matching your image asset
 const NOTE_COLORS = [
   '#000B58', '#001E75', '#003394', '#004BB3', '#0066C4', '#0084D6',
   '#009FE3', '#00B9E8', '#3CCCEF', '#6EDFF3', '#8EDFF6', '#B2EDF7'
@@ -181,7 +176,7 @@ ROWS.forEach((row)=>{
     const name = root + row.suffix;
     btn.textContent = name;
     btn.style.background = NOTE_COLORS[ci];
-    if(ci > 7) btn.style.color = '#020714'; // Ensure legibility on light tints
+    if(ci > 7) btn.style.color = '#000B58';
 
     const chordFreqs = buildChord(root, row.type);
     btn.addEventListener('click', ()=>{ selectChord({name, freqs: chordFreqs, colorIdx: ci}, btn, true); });
@@ -199,14 +194,12 @@ function selectChord(ch, btn, play){
   
   const chordDisplay = document.getElementById('chord-name');
   chordDisplay.textContent = ch.name;
-  chordDisplay.style.color = 'rgba(212, 242, 249, 0.7)'; 
   
-  if(play) strumFull(ch.freqs, 0.025);
+  if(play) strumFull(ch.freqs, 0.022);
 }
 
-/* Vertical Strum Plate Generation */
 const plate = document.getElementById('strum-plate');
-const NUM_STRINGS = 24;
+const NUM_STRINGS = 26;
 const strips = [];
 
 for(let i=0; i<NUM_STRINGS; i++){
@@ -228,10 +221,10 @@ function strumAt(clientY){
   lastStrumIdx = idx;
   const freqs = selectedChord.freqs;
   const noteIdx = Math.min(freqs.length-1, Math.floor(frac*freqs.length));
-  playNote(freqs[noteIdx], ensureCtx().currentTime, 2.0, 0.22);
+  playNote(freqs[noteIdx], ensureCtx().currentTime, getSustain(), 0.25);
   
-  strips[idx].style.background = 'rgba(142, 223, 246, 0.25)';
-  setTimeout(()=>{ if(strips[idx]) strips[idx].style.background=''; }, 150);
+  strips[idx].style.background = 'rgba(142, 223, 246, 0.3)';
+  setTimeout(()=>{ if(strips[idx]) strips[idx].style.background=''; }, 120);
 }
 
 plate.addEventListener('mousedown', e=>{ isStruming=true;lastStrumIdx=-1;strumAt(e.clientY); });
@@ -243,23 +236,30 @@ plate.addEventListener('touchend', ()=>{ isStruming=false;lastStrumIdx=-1; });
 
 function strumFull(freqs, spd){
   const c=ensureCtx(), t=c.currentTime;
-  freqs.forEach((f,i)=>playNote(f, t+i*spd, 2.0, 0.18));
+  freqs.forEach((f,i)=>playNote(f, t+i*spd, getSustain(), 0.18));
 }
 
-/* Audio Engine Architecture */
+/* Audio Architecture */
 let ctx, masterGain, dryGain, reverbGain, convolver;
+let sustainOn = true;
+
+document.getElementById('sustain-btn').addEventListener('click', function(){
+  sustainOn = !sustainOn;
+  this.classList.toggle('on', sustainOn);
+});
+function getSustain(){ return sustainOn ? 2.4 : 0.35; }
 
 function buildReverb(c){
   const len=c.sampleRate*2.0, buf=c.createBuffer(2,len,c.sampleRate);
-  for(let ch=0;ch<2;ch++){const d=buf.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.5);}
+  for(let ch=0;ch<2;ch++){const d=buf.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.4);}
   const cv=c.createConvolver();cv.buffer=buf;return cv;
 }
 
 function ensureCtx(){
   if(!ctx){
     ctx=new(window.AudioContext||window.webkitAudioContext)();
-    masterGain=ctx.createGain();masterGain.gain.value=0.8;
-    dryGain=ctx.createGain();dryGain.gain.value=0.7;
+    masterGain=ctx.createGain();masterGain.gain.value=0.85;
+    dryGain=ctx.createGain();dryGain.gain.value=0.75;
     reverbGain=ctx.createGain();reverbGain.gain.value=0.25;
     convolver=buildReverb(ctx);
     masterGain.connect(dryGain);dryGain.connect(ctx.destination);
@@ -276,17 +276,17 @@ function playNote(freq, when, dur, vol=0.2){
   const d=buf.getChannelData(0);for(let i=0;i<bufLen;i++)d[i]=Math.random()*2-1;
   const src=c.createBufferSource();src.buffer=buf;
   const bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=freq;bp.Q.value=60;
-  const g=c.createGain();g.gain.setValueAtTime(vol*1.6,when);g.gain.exponentialRampToValueAtTime(0.001,when+dur);
+  const g=c.createGain();g.gain.setValueAtTime(vol*1.5,when);g.gain.exponentialRampToValueAtTime(0.001,when+dur);
   src.connect(bp);bp.connect(g);g.connect(masterGain);src.start(when);src.stop(when+dur+0.05);
   
   const o=c.createOscillator();const g2=c.createGain();
   o.type='sine';o.frequency.value=freq;
-  g2.gain.setValueAtTime(0,when);g2.gain.linearRampToValueAtTime(vol*0.4,when+0.008);
+  g2.gain.setValueAtTime(0,when);g2.gain.linearRampToValueAtTime(vol*0.35,when+0.008);
   g2.gain.exponentialRampToValueAtTime(0.001,when+dur*1.2);
   o.connect(g2);g2.connect(masterGain);o.start(when);o.stop(when+dur*1.2+0.05);
 }
 
-/* Pure Minimalistic Metronome Mechanics */
+/* Auditory Metronome Engine */
 let metroInterval=null, isMetroOn=false, metroTick=0;
 const dot = document.querySelector('.beat-dot');
 
@@ -294,17 +294,14 @@ function playClick(when, isDownbeat) {
   const c = ensureCtx();
   const osc = c.createOscillator();
   const gainNode = c.createGain();
-  
   osc.type = 'triangle';
-  osc.frequency.setValueAtTime(isDownbeat ? 880 : 440, when);
-  
-  gainNode.gain.setValueAtTime(0.4, when);
-  gainNode.gain.exponentialRampToValueAtTime(0.001, when + 0.05);
-  
+  osc.frequency.setValueAtTime(isDownbeat ? 840 : 420, when);
+  gainNode.gain.setValueAtTime(0.35, when);
+  gainNode.gain.exponentialRampToValueAtTime(0.001, when + 0.04);
   osc.connect(gainNode);
   gainNode.connect(c.destination);
   osc.start(when);
-  osc.stop(when + 0.06);
+  osc.stop(when + 0.05);
 }
 
 function startMetronome() {
@@ -315,14 +312,10 @@ function startMetronome() {
   const intervalMs = (60 / bpm) * 1000;
   
   metroInterval = setInterval(() => {
-    const isDownbeat = (metroTick === 0);
-    playClick(ensureCtx().currentTime, isDownbeat);
-    
-    // Toggle flash animation indicator
+    playClick(ensureCtx().currentTime, (metroTick === 0));
     dot.classList.add('on');
-    setTimeout(() => dot.classList.remove('on'), 60);
-    
-    metroTick = (metroTick + 1) % 4; // 4/4 Time base tracking
+    setTimeout(() => dot.classList.remove('on'), 50);
+    metroTick = (metroTick + 1) % 4;
   }, intervalMs);
 }
 
@@ -350,16 +343,16 @@ document.getElementById('tempo-dn').addEventListener('click', ()=>setTempo(tempo
 
 document.addEventListener('keydown', e=>{
   if(e.target.tagName==='INPUT') return;
-  if(e.code==='Space'){ e.preventDefault(); if(selectedChord) strumFull(selectedChord.freqs, 0.025); }
+  if(e.code==='Space'){ e.preventDefault(); if(selectedChord) strumFull(selectedChord.freqs, 0.022); }
   if(e.code==='ArrowRight') setTempo(tempo+5);
   if(e.code==='ArrowLeft') setTempo(tempo-5);
 });
 
-// Auto-select basic C chord initialization setup
+// Auto-select baseline chord root
 setTimeout(() => {
   const initialBtn = document.querySelector('.chord-key');
   if(initialBtn) initialBtn.click();
-}, 400);
+}, 200);
 </script>
 </body>
 </html>
