@@ -3,91 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Omnichord</title>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<title>Omnichord - Minimal Ocean</title>
 <style>
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;background:#1e2622;color:#f3e1e1;font-family:'Space Grotesk',sans-serif;overflow:hidden;}
-body{display:flex;flex-direction:column;height:100vh;padding:16px;}
-
-/* Header */
-.header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;gap:12px;}
-.logo{font-family:'Syne',sans-serif;font-weight:800;font-size:16px;letter-spacing:-0.02em;color:#e2a4b7;text-transform:lowercase;}
-
-/* Controls Layout */
-.controls{display:flex;align-items:center;gap:16px;}
-.ctrl-group{display:flex;align-items:center;gap:6px;}
-
-/* Minimalist Button Styling */
-.sustain-btn, .rhythm-btn, .nudge{
-  background:#26322c;border:1px solid #34443c;color:#a3b899;
-  font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;
-  padding:5px 12px;border-radius:3px;cursor:pointer;transition:all .1s ease;
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { 
+  height: 100%; 
+  background: #020714; 
+  color: #D4F2F9; 
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
+  overflow: hidden; 
+  user-select: none;
+  -webkit-user-select: none;
 }
-.sustain-btn:hover, .rhythm-btn:hover, .nudge:hover{background:#2f3f37;color:#f3e1e1;}
-.sustain-btn.on, .rhythm-btn.on{background:#e2a4b7;border-color:#e2a4b7;color:#1e2622;font-weight:600;}
+body { display: flex; flex-direction: column; height: 100vh; padding: 16px; gap: 16px; }
 
-/* Tempo Module */
-.tempo-display{
-  font-size:14px;font-weight:600;color:#f3e1e1;background:#171e1b;
-  border:1px solid #26322c;padding:4px 8px;min-width:36px;text-align:center;border-radius:3px;
+/* Clean Top Header Bar */
+.header { display: flex; align-items: center; justify-content: space-between; flex-shrink: 0; }
+.logo { font-weight: 700; font-size: 18px; letter-spacing: -0.03em; color: #8EDFF6; text-transform: lowercase; }
+
+/* Simplified Pure Metronome Control */
+.controls { display: flex; align-items: center; gap: 12px; }
+.rhythm-toggle {
+  background: #002244; border: 1px solid #003366; color: #8EDFF6;
+  font-size: 13px; font-weight: 600; padding: 6px 14px; border-radius: 6px; cursor: pointer; transition: all .15s ease;
 }
-.tempo-nudge{display:flex;gap:2px;}
-.nudge{width:24px;height:24px;padding:0;display:flex;align-items:center;justify-content:center;font-size:14px;}
-#tempo-slider{width:70px;accent-color:#e2a4b7;cursor:pointer;background:#26322c;height:4px;border-radius:2px;-webkit-appearance:none;}
+.rhythm-toggle:hover { background: #003366; color: #D4F2F9; }
+.rhythm-toggle.on { background: #00B9E8; border-color: #00B9E8; color: #020714; }
 
-/* Beat Indicator Dots */
-.beat-dots{display:flex;gap:4px;align-items:center;height:24px;}
-.beat-dot{width:5px;height:5px;border-radius:50%;background:#26322c;transition:all .05s;}
-.beat-dot.on{background:#d37494;box-shadow:0 0 8px #d37494;}
-
-.rhythm-btns{display:flex;gap:2px;}
-
-/* Main Split View: Row Headers Fixed to Left */
-.main-layout{display:flex;flex:1;gap:8px;overflow:hidden;}
-.labels-sidebar{display:flex;flex-direction:column;gap:3px;justify-content:stretch;width:54px;padding-top:0px;}
-.row-label{
-  flex:1;display:flex;align-items:center;justify-content:flex-end;
-  font-size:10px;font-weight:600;color:#6b8272;text-transform:uppercase;
-  letter-spacing:0.02em;padding-right:6px;
+.tempo-display {
+  font-size: 14px; font-weight: 700; color: #D4F2F9; background: #000B58;
+  border: 1px solid #002244; padding: 5px 10px; min-width: 42px; text-align: center; border-radius: 6px;
 }
-
-/* Grid System */
-.grid-wrap{flex:1;display:flex;flex-direction:column;gap:3px;}
-.chord-row{display:grid;grid-template-columns:repeat(12,1fr);gap:3px;flex:1;}
-
-.chord-key{
-  border:none;border-radius:2px;
-  font-family:'Space Grotesk',sans-serif;font-size:11px;font-weight:500;
-  color:rgba(255,255,255,0.7);cursor:pointer;
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .05s, filter .1s;
-  user-select:none;-webkit-tap-highlight-color:transparent;
+.nudge {
+  width: 28px; height: 28px; background: #002244; border: 1px solid #003366; color: #8EDFF6;
+  font-size: 16px; font-weight: 600; border-radius: 6px; cursor: pointer; display: flex; align-items: center; justify-content: center;
 }
-.chord-key:hover{filter:brightness(1.15);}
-.chord-key:active{transform:scale(.95);}
-.chord-key.selected{color:#1e2622;font-weight:600;filter:brightness(1.25);box-shadow:inset 0 0 0 2px #f3e1e1;}
+.nudge:hover { background: #003366; }
+#tempo-slider { width: 90px; accent-color: #00B9E8; cursor: pointer; height: 4px; }
 
-/* Strum Plate Area */
-.strum-section{margin-top:12px;position:relative;}
-#strum-plate{
-  width:100%;height:64px;border-radius:4px;
-  background:#171e1b;border:1px solid #26322c;
-  position:relative;overflow:hidden;cursor:crosshair;touch-action:none;
-  display:flex;align-items:stretch;
-}
-.string-strip{flex:1;border-right:1px solid rgba(255,255,255,0.015);transition:background .15s;}
-.string-strip:last-child{border-right:none;}
+/* Visual Flash dot for Metronome Beats */
+.beat-dots { display: flex; gap: 6px; align-items: center; }
+.beat-dot { width: 8px; height: 8px; border-radius: 50%; background: #001533; transition: background 0.05s; }
+.beat-dot.on { background: #00B9E8; box-shadow: 0 0 10px #00B9E8; }
 
-/* Interface Overlay Text */
-#chord-name{
-  position:absolute;left:16px;top:50%;transform:translateY(-50%);
-  font-family:'Syne',sans-serif;font-size:28px;font-weight:700;
-  color:#26322c;pointer-events:none;text-transform:lowercase;
+/* Main Screen Workspace split in two */
+.main-layout { display: flex; flex: 1; gap: 16px; overflow: hidden; }
+
+/* Chord Section (Left side) */
+.chord-workspace { display: flex; flex: 1; gap: 8px; overflow: hidden; }
+.labels-sidebar { display: flex; flex-direction: column; gap: 4px; justify-content: stretch; width: 44px; }
+.row-label {
+  flex: 1; display: flex; align-items: center; justify-content: flex-end;
+  font-size: 11px; font-weight: 700; color: #0066C4; text-transform: uppercase; letter-spacing: 0.05em; padding-right: 4px;
 }
-.strum-hint{
-  position:absolute;right:16px;top:50%;transform:translateY(-50%);
-  font-size:10px;color:#4a5e51;pointer-events:none;text-align:right;
+.grid-wrap { flex: 1; display: flex; flex-direction: column; gap: 4px; }
+.chord-row { display: grid; grid-template-columns: repeat(12, 1fr); gap: 4px; flex: 1; }
+
+.chord-key {
+  border: none; border-radius: 4px;
+  font-family: inherit; font-size: 11px; font-weight: 600;
+  color: rgba(255, 255, 255, 0.85); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .05s, filter .1s;
+  -webkit-tap-highlight-color: transparent;
+}
+.chord-key:hover { filter: brightness(1.2); }
+.chord-key:active { transform: scale(.96); }
+.chord-key.selected { color: #020714; font-weight: 700; filter: brightness(1.35); box-shadow: inset 0 0 0 2px #D4F2F9; }
+
+/* Giant Vertical Strum Plate (Right side Optimized) */
+.strum-section { width: 140px; position: relative; display: flex; flex-shrink: 0; }
+#strum-plate {
+  width: 100%; height: 100%; border-radius: 8px;
+  background: #000B58; border: 2px solid #002244;
+  position: relative; overflow: hidden; cursor: crosshair; touch-action: none;
+  display: flex; flex-direction: column; align-items: stretch;
+}
+.string-strip { flex: 1; border-bottom: 1px solid rgba(255, 255, 255, 0.02); transition: background .15s; }
+.string-strip:last-child { border-bottom: none; }
+
+/* Chord Display Text centered on the vertical plate */
+#chord-name {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%) rotate(-90deg);
+  font-size: 42px; font-weight: 800; color: rgba(142, 223, 246, 0.15); pointer-events: none; text-transform: uppercase;
+  white-space: nowrap; letter-spacing: -0.02em;
 }
 </style>
 </head>
@@ -96,45 +95,33 @@ body{display:flex;flex-direction:column;height:100vh;padding:16px;}
 <div class="header">
   <div class="logo">omnichord</div>
   <div class="controls">
-    <button class="sustain-btn on" id="sustain-btn">Sus</button>
-
-    <div class="rhythm-btns">
-      <button class="rhythm-btn" data-p="waltz">Waltz</button>
-      <button class="rhythm-btn" data-p="bossa">Bossa</button>
-      <button class="rhythm-btn" data-p="march">March</button>
-      <button class="rhythm-btn" data-p="disco">Disco</button>
-    </div>
-
-    <div class="beat-dots" id="beat-dots"></div>
-
-    <div class="ctrl-group">
-      <div class="tempo-nudge">
-        <button class="nudge" id="tempo-dn">−</button>
-        <div class="tempo-display" id="tempo-display">90</div>
-        <button class="nudge" id="tempo-up">+</button>
-      </div>
-      <input type="range" id="tempo-slider" min="40" max="200" value="90" step="1">
-    </div>
+    <button class="rhythm-toggle" id="metro-toggle">Metronome</button>
+    <div class="beat-dots" id="beat-dots"><div class="beat-dot"></div></div>
+    <button class="nudge" id="tempo-dn">−</button>
+    <div class="tempo-display" id="tempo-display">90</div>
+    <button class="nudge" id="tempo-up">+</button>
+    <input type="range" id="tempo-slider" min="40" max="200" value="90" step="1">
   </div>
 </div>
 
 <div class="main-layout">
-  <div class="labels-sidebar" id="labels-sidebar"></div>
-  <div class="grid-wrap" id="grid-wrap"></div>
-</div>
-
-<div class="strum-section">
-  <div id="strum-plate">
-    <div id="chord-name">—</div>
+  <div class="chord-workspace">
+    <div class="labels-sidebar" id="labels-sidebar"></div>
+    <div class="grid-wrap" id="grid-wrap"></div>
   </div>
-  <div class="strum-hint">slide / tap / space to strum &nbsp;·&nbsp; arrows control tempo</div>
+  
+  <div class="strum-section">
+    <div id="strum-plate">
+      <div id="chord-name">—</div>
+    </div>
+  </div>
 </div>
 
 <script>
-// Muted sage greens and dusty pink harmonies sampled down into variables
+// Ocean-inspired colors matching your image asset
 const NOTE_COLORS = [
-  '#576b5c', '#5e7564', '#66806d', '#718c79', '#7d9985', '#89a692',
-  '#93b39d', '#9ebfa8', '#a8ccb3', '#b3d9be', '#bd6282', '#a85070'
+  '#000B58', '#001E75', '#003394', '#004BB3', '#0066C4', '#0084D6',
+  '#009FE3', '#00B9E8', '#3CCCEF', '#6EDFF3', '#8EDFF6', '#B2EDF7'
 ];
 
 const ROOTS = ['C','C#','D','D#','E','F','F#','G','G#','A','A#','B'];
@@ -194,6 +181,7 @@ ROWS.forEach((row)=>{
     const name = root + row.suffix;
     btn.textContent = name;
     btn.style.background = NOTE_COLORS[ci];
+    if(ci > 7) btn.style.color = '#020714'; // Ensure legibility on light tints
 
     const chordFreqs = buildChord(root, row.type);
     btn.addEventListener('click', ()=>{ selectChord({name, freqs: chordFreqs, colorIdx: ci}, btn, true); });
@@ -211,17 +199,17 @@ function selectChord(ch, btn, play){
   
   const chordDisplay = document.getElementById('chord-name');
   chordDisplay.textContent = ch.name;
-  chordDisplay.style.color = '#e2a4b7'; 
+  chordDisplay.style.color = 'rgba(212, 242, 249, 0.7)'; 
   
-  if(play) strumFull(ch.freqs, 0.028);
+  if(play) strumFull(ch.freqs, 0.025);
 }
 
-/* Strum space architecture */
+/* Vertical Strum Plate Generation */
 const plate = document.getElementById('strum-plate');
-const NUM_STRINGS = 28;
+const NUM_STRINGS = 24;
 const strips = [];
 
-for(let i=0;i<NUM_STRINGS;i++){
+for(let i=0; i<NUM_STRINGS; i++){
   const s = document.createElement('div');
   s.className = 'string-strip';
   plate.appendChild(s);
@@ -231,67 +219,51 @@ plate.appendChild(document.getElementById('chord-name'));
 
 let isStruming=false, lastStrumIdx=-1;
 
-function strumAt(clientX){
+function strumAt(clientY){
   if(!selectedChord) return;
   const rect = plate.getBoundingClientRect();
-  const frac = Math.max(0,Math.min(1,(clientX-rect.left)/rect.width));
+  const frac = Math.max(0,Math.min(1,(clientY-rect.top)/rect.height));
   const idx = Math.min(NUM_STRINGS-1, Math.floor(frac*NUM_STRINGS));
   if(idx===lastStrumIdx) return;
   lastStrumIdx = idx;
   const freqs = selectedChord.freqs;
   const noteIdx = Math.min(freqs.length-1, Math.floor(frac*freqs.length));
-  playNote(freqs[noteIdx], ensureCtx().currentTime, getSustain(), 0.2);
+  playNote(freqs[noteIdx], ensureCtx().currentTime, 2.0, 0.22);
   
-  strips[idx].style.background = '#e2a4b733';
-  setTimeout(()=>{ if(strips[idx]) strips[idx].style.background=''; }, 200);
+  strips[idx].style.background = 'rgba(142, 223, 246, 0.25)';
+  setTimeout(()=>{ if(strips[idx]) strips[idx].style.background=''; }, 150);
 }
 
-plate.addEventListener('mousedown', e=>{ isStruming=true;lastStrumIdx=-1;strumAt(e.clientX); });
-plate.addEventListener('mousemove', e=>{ if(isStruming) strumAt(e.clientX); });
+plate.addEventListener('mousedown', e=>{ isStruming=true;lastStrumIdx=-1;strumAt(e.clientY); });
+plate.addEventListener('mousemove', e=>{ if(isStruming) strumAt(e.clientY); });
 window.addEventListener('mouseup', ()=>{ isStruming=false;lastStrumIdx=-1; });
-plate.addEventListener('touchstart', e=>{ e.preventDefault();isStruming=true;lastStrumIdx=-1;strumAt(e.touches[0].clientX); },{passive:false});
-plate.addEventListener('touchmove', e=>{ e.preventDefault();strumAt(e.touches[0].clientX); },{passive:false});
+plate.addEventListener('touchstart', e=>{ e.preventDefault();isStruming=true;lastStrumIdx=-1;strumAt(e.touches[0].clientY); },{passive:false});
+plate.addEventListener('touchmove', e=>{ e.preventDefault();strumAt(e.touches[0].clientY); },{passive:false});
 plate.addEventListener('touchend', ()=>{ isStruming=false;lastStrumIdx=-1; });
-plate.addEventListener('click', e=>{
-  if(!selectedChord) return;
-  const rect=plate.getBoundingClientRect();
-  const frac=(e.clientX-rect.left)/rect.width;
-  strumFull(selectedChord.freqs, 0.022+frac*0.04);
-});
 
 function strumFull(freqs, spd){
   const c=ensureCtx(), t=c.currentTime;
-  freqs.forEach((f,i)=>playNote(f, t+i*spd, getSustain(), 0.18));
+  freqs.forEach((f,i)=>playNote(f, t+i*spd, 2.0, 0.18));
 }
 
-/* Synthesizer Engine Context */
-let ctx, masterGain, reverbGain, dryGain, rhythmGain, convolver;
-let sustainOn = true;
-
-document.getElementById('sustain-btn').addEventListener('click', function(){
-  sustainOn = !sustainOn;
-  this.classList.toggle('on', sustainOn);
-});
-
-function getSustain(){ return sustainOn ? 2.2 : 0.35; }
+/* Audio Engine Architecture */
+let ctx, masterGain, dryGain, reverbGain, convolver;
 
 function buildReverb(c){
-  const len=c.sampleRate*2.2, buf=c.createBuffer(2,len,c.sampleRate);
-  for(let ch=0;ch<2;ch++){const d=buf.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.3);}
+  const len=c.sampleRate*2.0, buf=c.createBuffer(2,len,c.sampleRate);
+  for(let ch=0;ch<2;ch++){const d=buf.getChannelData(ch);for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.5);}
   const cv=c.createConvolver();cv.buffer=buf;return cv;
 }
 
 function ensureCtx(){
   if(!ctx){
     ctx=new(window.AudioContext||window.webkitAudioContext)();
-    masterGain=ctx.createGain();masterGain.gain.value=0.75;
-    rhythmGain=ctx.createGain();rhythmGain.gain.value=0.38;
-    dryGain=ctx.createGain();dryGain.gain.value=0.62;
-    reverbGain=ctx.createGain();reverbGain.gain.value=0.28;
+    masterGain=ctx.createGain();masterGain.gain.value=0.8;
+    dryGain=ctx.createGain();dryGain.gain.value=0.7;
+    reverbGain=ctx.createGain();reverbGain.gain.value=0.25;
     convolver=buildReverb(ctx);
     masterGain.connect(dryGain);dryGain.connect(ctx.destination);
     masterGain.connect(convolver);convolver.connect(reverbGain);reverbGain.connect(ctx.destination);
-    rhythmGain.connect(ctx.destination);
   }
   if(ctx.state==='suspended')ctx.resume();
   return ctx;
@@ -299,101 +271,95 @@ function ensureCtx(){
 
 function playNote(freq, when, dur, vol=0.2){
   const c=ensureCtx();
-  const bufLen=Math.ceil(c.sampleRate*0.06);
+  const bufLen=Math.ceil(c.sampleRate*0.05);
   const buf=c.createBuffer(1,bufLen,c.sampleRate);
   const d=buf.getChannelData(0);for(let i=0;i<bufLen;i++)d[i]=Math.random()*2-1;
   const src=c.createBufferSource();src.buffer=buf;
-  const bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=freq;bp.Q.value=55;
-  const g=c.createGain();g.gain.setValueAtTime(vol*1.5,when);g.gain.exponentialRampToValueAtTime(0.001,when+dur);
+  const bp=c.createBiquadFilter();bp.type='bandpass';bp.frequency.value=freq;bp.Q.value=60;
+  const g=c.createGain();g.gain.setValueAtTime(vol*1.6,when);g.gain.exponentialRampToValueAtTime(0.001,when+dur);
   src.connect(bp);bp.connect(g);g.connect(masterGain);src.start(when);src.stop(when+dur+0.05);
   
   const o=c.createOscillator();const g2=c.createGain();
   o.type='sine';o.frequency.value=freq;
-  g2.gain.setValueAtTime(0,when);g2.gain.linearRampToValueAtTime(vol*0.35,when+0.008);
-  g2.gain.exponentialRampToValueAtTime(0.001,when+dur*1.1);
-  o.connect(g2);g2.connect(masterGain);o.start(when);o.stop(when+dur*1.1+0.05);
+  g2.gain.setValueAtTime(0,when);g2.gain.linearRampToValueAtTime(vol*0.4,when+0.008);
+  g2.gain.exponentialRampToValueAtTime(0.001,when+dur*1.2);
+  o.connect(g2);g2.connect(masterGain);o.start(when);o.stop(when+dur*1.2+0.05);
 }
 
-function playNoise(when,dur,vol,hp){
-  const c=ensureCtx(),len=Math.ceil(c.sampleRate*dur);
-  const buf=c.createBuffer(1,len,c.sampleRate);const d=buf.getChannelData(0);
-  for(let i=0;i<len;i++)d[i]=Math.random()*2-1;
-  const src=c.createBufferSource();src.buffer=buf;
-  const f=c.createBiquadFilter();f.type='highpass';f.frequency.value=hp;
-  const g=c.createGain();g.gain.setValueAtTime(vol,when);g.gain.exponentialRampToValueAtTime(0.001,when+dur);
-  src.connect(f);f.connect(g);g.connect(rhythmGain);src.start(when);src.stop(when+dur+0.01);
-}
-function playKick(when){
-  const c=ensureCtx();const o=c.createOscillator();const g=c.createGain();
-  o.frequency.setValueAtTime(155,when);o.frequency.exponentialRampToValueAtTime(0.001,when+0.36);
-  g.gain.setValueAtTime(0.6,when);g.gain.exponentialRampToValueAtTime(0.001,when+0.36);
-  o.connect(g);g.connect(rhythmGain);o.start(when);o.stop(when+0.38);
-}
-function playSnare(w){playNoise(w,0.12,0.28,1200);}
-function playHH(w,open){playNoise(w,open?0.2:0.05,0.16,7200);}
-function playRim(w){
-  const c=ensureCtx();const o=c.createOscillator();const g=c.createGain();
-  o.type='square';o.frequency.value=830;
-  g.gain.setValueAtTime(0.12,w);g.gain.exponentialRampToValueAtTime(0.001,w+0.04);
-  o.connect(g);g.connect(rhythmGain);o.start(w);o.stop(w+0.05);
+/* Pure Minimalistic Metronome Mechanics */
+let metroInterval=null, isMetroOn=false, metroTick=0;
+const dot = document.querySelector('.beat-dot');
+
+function playClick(when, isDownbeat) {
+  const c = ensureCtx();
+  const osc = c.createOscillator();
+  const gainNode = c.createGain();
+  
+  osc.type = 'triangle';
+  osc.frequency.setValueAtTime(isDownbeat ? 880 : 440, when);
+  
+  gainNode.gain.setValueAtTime(0.4, when);
+  gainNode.gain.exponentialRampToValueAtTime(0.001, when + 0.05);
+  
+  osc.connect(gainNode);
+  gainNode.connect(c.destination);
+  osc.start(when);
+  osc.stop(when + 0.06);
 }
 
-const PATTERNS={
-  waltz:{steps:6,subdiv:3,seq:[t=>{playKick(t);},t=>{playHH(t);},t=>{playHH(t);},t=>{playSnare(t);},t=>{playHH(t);},t=>{playHH(t);}]},
-  bossa:{steps:8,subdiv:2,seq:[t=>{playKick(t);playHH(t);},null,t=>{playRim(t);},t=>{playHH(t);},t=>{playKick(t);playSnare(t);},t=>{playHH(t);},t=>{playRim(t);},t=>{playHH(t,true);}]},
-  march:{steps:4,subdiv:2,seq:[t=>{playKick(t);playHH(t);},t=>{playSnare(t);},t=>{playKick(t);playHH(t);},t=>{playSnare(t);playHH(t);}]},
-  disco:{steps:8,subdiv:2,seq:[t=>{playKick(t);playHH(t);},t=>{playHH(t);},t=>{playSnare(t);playHH(t);},t=>{playHH(t);},t=>{playKick(t);playHH(t);},t=>{playKick(t);},t=>{playSnare(t);playHH(t);},t=>{playHH(t,true);}]},
-};
-
-let rInterval=null, rStep=0, rActive=null;
-const beatDotsEl=document.getElementById('beat-dots');
-let bdots=[];
-
-function buildBeatDots(n){
-  beatDotsEl.innerHTML='';bdots=[];
-  for(let i=0;i<n;i++){const d=document.createElement('div');d.className='beat-dot';beatDotsEl.appendChild(d);bdots.push(d);}
+function startMetronome() {
+  stopMetronome();
+  isMetroOn = true;
+  document.getElementById('metro-toggle').classList.add('on');
+  const bpm = +document.getElementById('tempo-slider').value;
+  const intervalMs = (60 / bpm) * 1000;
+  
+  metroInterval = setInterval(() => {
+    const isDownbeat = (metroTick === 0);
+    playClick(ensureCtx().currentTime, isDownbeat);
+    
+    // Toggle flash animation indicator
+    dot.classList.add('on');
+    setTimeout(() => dot.classList.remove('on'), 60);
+    
+    metroTick = (metroTick + 1) % 4; // 4/4 Time base tracking
+  }, intervalMs);
 }
 
-function startRhythm(name){
-  stopRhythm(); rActive=name;
-  const p=PATTERNS[name]; buildBeatDots(p.steps); rStep=0;
-  const bpm=+document.getElementById('tempo-slider').value;
-  const ms=(60/bpm)*1000/(p.steps/p.subdiv);
-  rInterval=setInterval(()=>{
-    bdots.forEach((d,i)=>d.classList.toggle('on',i===rStep));
-    const fn=p.seq[rStep];if(fn)fn(ensureCtx().currentTime);
-    rStep=(rStep+1)%p.steps;
-  },ms);
+function stopMetronome() {
+  clearInterval(metroInterval);
+  isMetroOn = false;
+  metroTick = 0;
+  document.getElementById('metro-toggle').classList.remove('on');
 }
-function stopRhythm(){clearInterval(rInterval);rInterval=null;rStep=0;rActive=null;beatDotsEl.innerHTML='';bdots=[];}
 
-document.querySelectorAll('.rhythm-btn').forEach(btn=>{
-  btn.addEventListener('click',()=>{
-    const name=btn.dataset.p;
-    document.querySelectorAll('.rhythm-btn').forEach(b=>b.classList.remove('on'));
-    if(rActive===name){stopRhythm();return;}
-    btn.classList.add('on');
-    startRhythm(name);
-  });
+document.getElementById('metro-toggle').addEventListener('click', () => {
+  if (isMetroOn) stopMetronome(); else startMetronome();
 });
 
-let tempo=90;
+let tempo = 90;
 function setTempo(v){
-  tempo=Math.max(40,Math.min(200,Math.round(v)));
-  document.getElementById('tempo-display').textContent=tempo;
-  document.getElementById('tempo-slider').value=tempo;
-  if(rActive)startRhythm(rActive);
+  tempo = Math.max(40, Math.min(200, Math.round(v)));
+  document.getElementById('tempo-display').textContent = tempo;
+  document.getElementById('tempo-slider').value = tempo;
+  if(isMetroOn) startMetronome();
 }
-document.getElementById('tempo-slider').addEventListener('input',e=>setTempo(+e.target.value));
-document.getElementById('tempo-up').addEventListener('click',()=>setTempo(tempo+5));
-document.getElementById('tempo-dn').addEventListener('click',()=>setTempo(tempo-5));
+document.getElementById('tempo-slider').addEventListener('input', e=>setTempo(+e.target.value));
+document.getElementById('tempo-up').addEventListener('click', ()=>setTempo(tempo+5));
+document.getElementById('tempo-dn').addEventListener('click', ()=>setTempo(tempo-5));
 
-document.addEventListener('keydown',e=>{
-  if(e.target.tagName==='INPUT')return;
-  if(e.code==='Space'){e.preventDefault();if(selectedChord)strumFull(selectedChord.freqs,0.028);}
-  if(e.code==='ArrowRight')setTempo(tempo+5);
-  if(e.code==='ArrowLeft')setTempo(tempo-5);
+document.addEventListener('keydown', e=>{
+  if(e.target.tagName==='INPUT') return;
+  if(e.code==='Space'){ e.preventDefault(); if(selectedChord) strumFull(selectedChord.freqs, 0.025); }
+  if(e.code==='ArrowRight') setTempo(tempo+5);
+  if(e.code==='ArrowLeft') setTempo(tempo-5);
 });
+
+// Auto-select basic C chord initialization setup
+setTimeout(() => {
+  const initialBtn = document.querySelector('.chord-key');
+  if(initialBtn) initialBtn.click();
+}, 400);
 </script>
 </body>
 </html>
